@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="CSharpFunctionalExtensions" Version="3.1.0" />
+      <PackageReference Include="FastEndpoints" Version="5.31.0" />
+      <PackageReference Include="Flurl.Http" Version="4.0.2" />
+    </ItemGroup>
+
+</Project>

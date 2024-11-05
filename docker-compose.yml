@@ -1,0 +1,6 @@
+﻿services:
+  cloudhumans.claudia.api:
+    image: cloudhumans.claudia.api
+    build:
+      context: .
+      dockerfile: src/CloudHumans.ClaudIA.Api/Dockerfile
