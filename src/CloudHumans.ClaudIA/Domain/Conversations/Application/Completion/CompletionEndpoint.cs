@@ -1,8 +1,9 @@
 using CloudHumans.ClaudIA.Domain.Shared.ValueObjects;
+using CloudHumans.ClaudIA.Infrastructure;
 using CloudHumans.ClaudIA.Shared;
 using FastEndpoints;
 
-namespace CloudHumans.ClaudIA.Features.ConversationCompletion;
+namespace CloudHumans.ClaudIA.Domain.Conversations.Application.Completion;
 
 public class CompletionEndpoint : Endpoint<PostRequest, PostResponse>
 {
@@ -24,8 +25,8 @@ public class CompletionEndpoint : Endpoint<PostRequest, PostResponse>
     public override async Task HandleAsync(PostRequest req, CancellationToken ct)
     {
         var command = CompletionCommand.Create(req.HelpdeskId,
-                                              req.ProjectName,
-                                              req.Messages.Select(x => new Message(x.Role, x.Content)));
+                                                                      req.ProjectName,
+                                                                      req.Messages.Select(x => new Message(x.Role, x.Content)));
         if (command.IsFailure)
         {
             await SendResultAsync(_httpResponseFactory.CreateErrorWith400("Invalid request", command.Error));
@@ -33,8 +34,12 @@ public class CompletionEndpoint : Endpoint<PostRequest, PostResponse>
         }
 
         var commandHandled = await _commandHandler.HandleAsync(command.Value, ct);
+        if (commandHandled.IsFailure)
+        {
+            await SendResultAsync(_httpResponseFactory.CreateErrorWith400("Unhandled use case", commandHandled.Error));
+        }
 
-        await SendResultAsync(_httpResponseFactory.CreateSuccessWith200(new PostResponse()));
+        await SendResultAsync(_httpResponseFactory.CreateSuccessWith200(new PostResponse(commandHandled.Value)));
     }
 }
 
@@ -42,4 +47,4 @@ public record PostRequest(int HelpdeskId, string ProjectName, IEnumerable<PostMe
 
 public record PostMessage(string Role, string Content);
 
-public record PostResponse();
+public record PostResponse(string resultMessage);

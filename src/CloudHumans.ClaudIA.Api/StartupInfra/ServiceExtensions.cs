@@ -1,4 +1,5 @@
-﻿using CloudHumans.ClaudIA.Shared;
+﻿using CloudHumans.ClaudIA.Infrastructure;
+using CloudHumans.ClaudIA.Shared;
 
 namespace CloudHumans.ClaudIA.Api.StartupInfra;
 
@@ -8,14 +9,13 @@ internal static class ServicesExtensions
     {
         services.AddExceptionHandler<HttpGlobalExceptionHandler>();
         services.AddProblemDetails();
-
         return services;
     }
     
     public static IServiceCollection AddOpenApiSpecs(this IServiceCollection services)
     {
         services.AddEndpointsApiExplorer();
-        services.AddOpenApiDocument();
+        services.AddOpenApiDocument(doc => { doc.Title = "CloudHumans.ClaudIA.Api"; });
         return services;
     }
 }

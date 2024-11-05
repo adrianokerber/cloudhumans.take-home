@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿using CloudHumans.ClaudIA.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CloudHumans.ClaudIA.Shared;
+namespace CloudHumans.ClaudIA.Infrastructure;
 
 public sealed class HttpResponseFactory : IService<HttpResponseFactory>
 {

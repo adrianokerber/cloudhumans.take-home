@@ -1,7 +1,7 @@
 using CloudHumans.ClaudIA.Domain.Shared.ValueObjects;
 using CSharpFunctionalExtensions;
 
-namespace CloudHumans.ClaudIA.Features.ConversationCompletion;
+namespace CloudHumans.ClaudIA.Domain.Conversations.Application.Completion;
 
 public sealed class CompletionCommand
 {

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace CloudHumans.ClaudIA.Shared
+namespace CloudHumans.ClaudIA.Infrastructure
 {
     public sealed class HttpGlobalExceptionHandler : IExceptionHandler
     {

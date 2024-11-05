@@ -4,7 +4,6 @@ using CloudHumans.ClaudIA.Api.StartupInfra;
 using FastEndpoints;
 
 var builder = WebApplication.CreateSlimBuilder(args);
-//var builder = WebApplication.CreateBuilder(args); // TODO: try this alternative!
 
 builder.Host
     .ConfigureContainer<ContainerBuilder>(builder =>
@@ -14,9 +13,9 @@ builder.Host
     .UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
 builder.Services
+    .AddHttpGlobalExceptionHandler()
     .AddFastEndpoints()
-    .AddOpenApiSpecs()
-    .AddHttpGlobalExceptionHandler();
+    .AddOpenApiSpecs();
 
 var app = builder.Build();
 
