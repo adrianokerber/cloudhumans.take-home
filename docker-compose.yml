@@ -1,6 +1,17 @@
 ﻿services:
-  cloudhumans.claudia.api:
-    image: cloudhumans.claudia.api
+  api:
+    container_name: claudia-api
+    image: claudia-api
     build:
       context: .
       dockerfile: src/CloudHumans.ClaudIA.Api/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
