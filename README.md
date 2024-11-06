@@ -3,22 +3,39 @@ This is the implementation of Cloud Humans Take-Home assignment.
 
 > View the challenge description on the [oficial repo](https://github.com/cloudhumans/take-home) or view our copy [here](./docs/OriginalChallengeSpecifications.md).
 
-## Running the Project
+## Running the application
 
-The easyest way to run the project is using [Docker](https://www.docker.com/) or [Podman](https://podman.io/) as container solutions.
+The easyest way to run the aplication is using [Docker](https://www.docker.com/) or [Podman](https://podman.io/) as container solutions.
 
-With Docker use the following commands:
+1. With Docker use the following commands:
 
-```shell
-# Start the application
-docker compose up -d
+    ```shell
+    # Start the application
+    docker compose up -d
 
-# Stop the execution started with the previous command
-docker compose down
-```
+    # Stop the execution started with the previous command
+    docker compose down
+    ```
 
-💡Alternatives: You can also use dotnet CLI or IDEs like Visual Studio or JetBrains Rider to run the application.
+    >💡Tip: Instead of Docker you could also use **dotnet CLI** or IDEs like **Visual Studio** or **JetBrains Rider** in order to run the application.
 
+2. Once the application is running, you can access via `http://localhost:8080/`. To see the OpenApi documentation access `http://localhost:8080/swagger`.
+
+3. Here is the cURL to call the API:
+    ```shell
+    curl --location 'http://localhost:8080/conversations/completions' \
+    --header 'Content-Type: application/json' \
+    --data '{
+        "helpdeskId": 123456,
+        "projectName": "tesla_motors",
+        "messages": [
+            {
+                "role": "USER",
+                "content": "Hello! How long does a Tesla battery last before it needs to be replaced?"
+            }
+        ]
+    }'
+    ```
 
 ## Main Technical Decisions
 
