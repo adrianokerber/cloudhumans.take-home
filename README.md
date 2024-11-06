@@ -48,12 +48,17 @@ Based on that we made some technical decisions:
 1. We adopted the `Vertical Slice Architecture` and separated the WebApi deployment from the Core/Domain project, preparing the structure to receive the next related modules, when implemented.
 1. Adopted `Command Query Separation (AKA: CQS)` in order to clarify each feature behaviour and avoid un-intentional side efects like mutation from a feature that should only "query" data.
 1. We also adopted some functional behaviours in order to improve the application consistency, like `Result Pattern` found as the Result wrapper used in most of the operation returns and commands.
+1. Used `Simple Factory` (Ex: Conversation.Create() method) concept to build aggregates and commands.
 1. For the API itself we decided to use the REPR pattern via FastEndpoints in order to specify only one endpoint per file, avoiding the couppling.
 1. Last but least, we designed our application thinking about DDD (Domain Driven Design), considering the Conversation as an aggregate root.
 
 Next steps:
 
-1. Based on the request sample provided on the challenge description, that has `helpdeskId` and `projectName`, we can assume that our solution is multi tenant. Also we should validate the informed data on domain, possibly aggregate more info from the specific database. So in our current structure we would add a `ConversationsRepository` (Using the Repository pattern) as our data access for the Conversation aggregate.
+1. Based on the request sample provided on the challenge description, that has `helpdeskId` and `projectName`, we can assume that our solution is **multi tenant** and we should prepare it for so. Also we should check the consistency of the informed data with our database. So in our current structure we would add a `ConversationsRepository` (Using the Repository pattern) as our data access for the Conversation aggregate keeping the conversation history.
+1. Add [Polly](https://www.thepollyproject.org/) to deal with policies of Retry, CircuitBreaker, etc. But this would be only used while we have direct calls to external resources, the proposed architecture would be protecting this resources adding an API Gateway and so, would deal with the policies above.
+1. Improve the Services message response preventing that Exception messages leak unintentionally.
+1. Add OpenTelemetry using Log and Traces to enable Observability.
+1. Add tests: Unit tests to cover the domain and all behaviours; Integration tests to cover API requests, and error behaviours.
 
 ### 📌 These are the main decisions, feel free to agree or disagree with them, I would love to chat about it. 😊
 

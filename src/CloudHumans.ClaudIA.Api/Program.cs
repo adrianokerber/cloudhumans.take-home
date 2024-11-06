@@ -6,9 +6,9 @@ using FastEndpoints;
 var builder = WebApplication.CreateSlimBuilder(args);
 
 builder.Host
-    .ConfigureContainer<ContainerBuilder>(builder =>
+    .ConfigureContainer<ContainerBuilder>(cb =>
     {
-        builder.RegisterModule(new ApplicationModule());
+        cb.RegisterModule(new ApplicationModule(builder.Configuration));
     })
     .UseServiceProviderFactory(new AutofacServiceProviderFactory());
 

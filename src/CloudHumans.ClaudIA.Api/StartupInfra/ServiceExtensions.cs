@@ -1,5 +1,4 @@
 ﻿using CloudHumans.ClaudIA.Infrastructure;
-using CloudHumans.ClaudIA.Shared;
 
 namespace CloudHumans.ClaudIA.Api.StartupInfra;
 

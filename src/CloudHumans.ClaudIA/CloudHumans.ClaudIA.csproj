@@ -13,7 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Domain\Conversations\Application\" />
+      <Folder Include="Domain\Conversations\Features\" />
     </ItemGroup>
 
 </Project>
