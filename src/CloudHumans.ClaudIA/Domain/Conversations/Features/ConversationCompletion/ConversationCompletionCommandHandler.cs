@@ -29,12 +29,6 @@ public sealed class ConversationCompletionCommandHandler(EmbeddingService embedd
             return Result.Failure<Conversation>(completion.Error);
 
         conversation.Value.AddMessage(completion.Value);
-        var handoverToHumanNeeded = IsHandoverToHumanNeeded(closestData.Value);
-        
         return conversation;
     }
-    
-    // Note: 'Smart Handover Feature'
-    private bool IsHandoverToHumanNeeded(List<DataSection> dataSections)
-        => dataSections.Any(x => x.Type != "N1");
 }

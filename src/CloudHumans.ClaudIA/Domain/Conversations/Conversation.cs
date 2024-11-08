@@ -15,8 +15,10 @@ public sealed class Conversation : Entity<int>
     
     public IReadOnlyList<Message> Messages => _messages;
 
-    private Conversation(List<Message> messages)
+    private Conversation(int helpdeskId, string projectName, List<Message> messages)
     {
+        HelpdeskId = helpdeskId;
+        ProjectName = projectName;
         _messages = messages;
     }
 
@@ -29,7 +31,7 @@ public sealed class Conversation : Entity<int>
         if (messages.Count == 0)
             return Result.Failure<Conversation>("Conversation must contain at least one message");
 
-        return new Conversation(messages);
+        return new Conversation(helpdeskId, projectName, messages);
     }
 
     public void AddMessage(Message message)
@@ -37,5 +39,11 @@ public sealed class Conversation : Entity<int>
         _messages.Add(message);
     }
     
-    public bool LastMessageIsNotFromUser() => LastMessage.Role != Role.User; 
+    public bool LastMessageIsNotFromUser() => LastMessage.Role != Role.User;
+
+    public bool IsHandoverToHumanNeeded()
+    {
+        var sections = LastMessage.DataSections;
+        return sections.HasValue && sections.Value.Any(x => x.Type != "N1");
+    }
 }

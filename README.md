@@ -7,7 +7,13 @@ This is the implementation of Cloud Humans Take-Home assignment.
 
 The easyest way to run the aplication is using [Docker](https://www.docker.com/) or [Podman](https://podman.io/) as container solutions.
 
-1. With Docker use the following commands:
+1. First you will need to change the api keys on the `appsettings.json` file.
+    ```json
+    "OpenaiKey": "key-overridden-by-user-secrets",
+    "AzureAiSearchKey": "key-overridden-by-user-secrets"
+    ```
+
+1. Now, with Docker use the following commands:
 
     ```shell
     # Start the application
@@ -19,9 +25,9 @@ The easyest way to run the aplication is using [Docker](https://www.docker.com/)
 
     >💡Tip: Instead of Docker you could also use **dotnet CLI** or IDEs like **Visual Studio** or **JetBrains Rider** in order to run the application.
 
-2. Once the application is running, you can access via `http://localhost:8080/`. To see the OpenApi documentation access `http://localhost:8080/swagger`.
+1. Once the application is running, you can access via `http://localhost:8080/`. To see the OpenApi documentation access `http://localhost:8080/swagger`.
 
-3. Here is the cURL to call the API:
+1. Here is the cURL to call the API:
     ```shell
     curl --location 'http://localhost:8080/conversations/completions' \
     --header 'Content-Type: application/json' \
@@ -39,9 +45,23 @@ The easyest way to run the aplication is using [Docker](https://www.docker.com/)
 
 ## Main Technical Decisions
 
+First of all, we chose to develop the **Smart Handover Feature**, to see the behaviour just send the following payload for example:
+```json
+{
+    "helpdeskId": 123456,
+    "projectName": "tesla_motors",
+    "messages": [
+        {
+            "role": "USER",
+            "content": "Hello! My dog run from a Tesla. Can you help me?"
+        }
+    ]
+}
+```
+
 ![high-level-arch](./docs/high-level-arch.png)
 
-Given the high level image above, provided for the challenge, we could assume that ClaudIA is a complex ecosystem with different "modules" colaborating to achieve the business goals.
+Besides that, given the high level image above, provided for the challenge, we could assume that ClaudIA is a complex ecosystem with different "modules" colaborating to achieve the business goals.
 
 Based on that we made some technical decisions:
 

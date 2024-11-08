@@ -17,7 +17,7 @@ public static class ResponseMapper
         var sectionList = conversation.Messages.Last().DataSections;
         var sections = sectionList.HasValue ? sectionList.Value.ToViewModelList() : null;
 
-        return new ConversationResponse(messages, false, sections);
+        return new ConversationResponse(messages, conversation.IsHandoverToHumanNeeded(), sections);
     }
 
     private static ConversationMessageResponse ToViewModel(this Message message)
