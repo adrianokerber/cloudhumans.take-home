@@ -1,4 +1,4 @@
-using CloudHumans.ClaudIA.Domain.Shared.ValueObjects;
+using CloudHumans.ClaudIA.Domain.Conversations.ValueObjects;
 using CSharpFunctionalExtensions;
 
 namespace CloudHumans.ClaudIA.Domain.Conversations.Features.ConversationCompletion;

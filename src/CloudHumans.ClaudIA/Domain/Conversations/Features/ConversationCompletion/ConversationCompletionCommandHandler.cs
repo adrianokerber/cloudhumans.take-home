@@ -1,5 +1,5 @@
 using CloudHumans.ClaudIA.Domain.Conversations.Services;
-using CloudHumans.ClaudIA.Domain.Shared.ValueObjects;
+using CloudHumans.ClaudIA.Domain.Shared;
 using CloudHumans.ClaudIA.Shared;
 using CSharpFunctionalExtensions;
 
@@ -10,7 +10,7 @@ public sealed class ConversationCompletionCommandHandler(EmbeddingService embedd
 {
     public override async Task<Result<Conversation>> HandleAsync(ConversationCompletionCommand command, CancellationToken ct = default)
     {
-        var conversation = Conversation.Create(command.Messages);
+        var conversation = Conversation.Create(command.HelpdeskId, command.ProjectName, command.Messages);
         if (conversation.IsFailure)
             return Result.Failure<Conversation>(conversation.Error);
         if (conversation.Value.LastMessageIsNotFromUser())
@@ -24,14 +24,17 @@ public sealed class ConversationCompletionCommandHandler(EmbeddingService embedd
         if (closestData.IsFailure)
             return Result.Failure<Conversation>(closestData.Error);
         
-        // TODO: Implement 'Smart Handover Feature'
-        
         var completion = await contextualResponseService.GenerateConversationCompletion(conversation.Value.LastMessage.Content, closestData.Value);
         if (completion.IsFailure)
             return Result.Failure<Conversation>(completion.Error);
 
         conversation.Value.AddMessage(completion.Value);
+        var handoverToHumanNeeded = IsHandoverToHumanNeeded(closestData.Value);
         
         return conversation;
     }
+    
+    // Note: 'Smart Handover Feature'
+    private bool IsHandoverToHumanNeeded(List<DataSection> dataSections)
+        => dataSections.Any(x => x.Type != "N1");
 }

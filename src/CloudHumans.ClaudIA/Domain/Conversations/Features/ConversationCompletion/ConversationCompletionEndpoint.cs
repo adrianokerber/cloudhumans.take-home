@@ -46,8 +46,8 @@ public record ConversationRequest(int HelpdeskId, string ProjectName, IEnumerabl
 
 public record ConversationMessageRequest(string Role, string Content);
 
-public record ConversationResponse(List<ConversationMessageResponse> Messages, bool HandoverToHumanNeeded, List<ConversationRetrievedSection> SectionsRetrieved);
+public record ConversationResponse(List<ConversationMessageResponse> Messages, bool HandoverToHumanNeeded, IEnumerable<ConversationRetrievedSection> SectionsRetrieved);
 
-public struct ConversationRetrievedSection(float Score, string Content);
+public record ConversationRetrievedSection(float Score, string Content);
 
 public record ConversationMessageResponse(string Role, string Content); 

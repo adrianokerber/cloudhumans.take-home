@@ -1,4 +1,5 @@
-using CloudHumans.ClaudIA.Domain.Shared.ValueObjects;
+using CloudHumans.ClaudIA.Domain.Conversations.ValueObjects;
+using CloudHumans.ClaudIA.Domain.Shared;
 using CloudHumans.ClaudIA.Shared;
 using CSharpFunctionalExtensions;
 using Flurl.Http;
@@ -36,7 +37,11 @@ public sealed class ContextualResponseService(string apiKey) : IService<Contextu
             if (role.IsFailure)
                 return Result.Failure<Message>(role.Error);
             
-            return new Message(role.Value, messageResponse.content);
+            var message = Message.Create(role.Value, messageResponse.content, improvedDataset);
+            if (message.IsFailure)
+                return Result.Failure<Message>(message.Error);
+
+            return message.Value;
         }
         catch (FlurlHttpException ex)
         {

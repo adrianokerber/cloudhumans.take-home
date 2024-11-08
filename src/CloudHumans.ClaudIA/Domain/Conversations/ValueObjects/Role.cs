@@ -1,6 +1,6 @@
 using CSharpFunctionalExtensions;
 
-namespace CloudHumans.ClaudIA.Domain.Shared.ValueObjects;
+namespace CloudHumans.ClaudIA.Domain.Conversations.ValueObjects;
 
 public record Role
 {

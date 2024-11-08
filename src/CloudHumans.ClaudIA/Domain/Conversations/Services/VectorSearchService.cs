@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using CloudHumans.ClaudIA.Domain.Shared.ValueObjects;
+using CloudHumans.ClaudIA.Domain.Shared;
 using CloudHumans.ClaudIA.Shared;
 using CSharpFunctionalExtensions;
 using Flurl;

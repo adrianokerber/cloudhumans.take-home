@@ -1,4 +1,4 @@
-using CloudHumans.ClaudIA.Domain.Shared.ValueObjects;
+using CloudHumans.ClaudIA.Domain.Conversations.ValueObjects;
 using CSharpFunctionalExtensions;
 
 namespace CloudHumans.ClaudIA.Domain.Conversations.Features.ConversationCompletion.Mappers;
@@ -11,7 +11,11 @@ public static class RequestMapper
         if (role.IsFailure)
             return Result.Failure<Message>(role.Error);
         
-        return new Message(role.Value, messageRequest.Content);
+        var message = Message.Create(role.Value, messageRequest.Content);
+        if (message.IsFailure)
+            return Result.Failure<Message>(message.Error);
+
+        return message.Value;
     }
 
     public static Result<List<Message>> ToMessageList(
